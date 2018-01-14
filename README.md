@@ -1,1 +1,2 @@
-# zb-api
+# cc-miner
+
