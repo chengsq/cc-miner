@@ -1,10 +1,12 @@
 ﻿import json, urllib2, hashlib,struct,sha,time
+import sys
 
 class zb_api:
 	
-    def __init__(self, mykey, mysecret):
+    def __init__(self, mykey, mysecret,currency):
         self.mykey    = mykey
         self.mysecret = mysecret
+        self.currency = currency
 
     def __fill(self, value, lenght, fillByte):
         if len(value) >= lenght:
@@ -53,6 +55,7 @@ class zb_api:
             reqTime = (int)(time.time()*1000)
             params+= '&sign=%s&reqTime=%d'%(sign, reqTime)
             url = 'https://trade.zb.com/api/' + path + '?' + params
+            print url
             request = urllib2.Request(url)
             response = urllib2.urlopen(request, timeout=2)
             doc = json.loads(response.read())
@@ -65,19 +68,47 @@ class zb_api:
         try:
             params = "accesskey="+self.mykey+"&method=getAccountInfo"
             path = 'getAccountInfo'
-            
             obj = self.__api_call(path, params)
-            #print obj
+            print obj
             return obj
         except Exception,ex:
             print >>sys.stderr, 'zb query_account exception,',ex
             return None
 
-        
-if __name__ == '__main__':
-    access_key    = 'accesskey'
-    access_secret = 'secretkey'
 
-    api = zb_api(access_key, access_secret)
+    def get_useraddress(self):
+        currency = "&currency=" + self.currency
+        params = "accesskey=" + self.mykey + currency+ "&method=getUserAddress"
+        path = 'getUserAddress'
+        obj = self.__api_call(path, params)
+        print obj
 
-    print api.query_account()
+    def order(self):
+        pass
+
+    def get_order(self,id=1):
+        currency = "&currency=" + self.currency
+        id = "&id=201710122805"
+        params = "accesskey=" + self.mykey +currency + id + "&method=getOrder"
+        path = 'getOrder'
+        obj = self.__api_call(path, params)
+        print obj
+
+    def cancel_order(self,id):
+        currency = "&currency=" + self.currency
+        id = "&id=201710122805"
+        params = "accesskey=" + self.mykey + currency + id + "&method=cancelOrder"
+        path = 'cancelOrder'
+        obj = self.__api_call(path, params)
+        print obj
+
+
+    def get_orders(self):
+        pass
+
+
+
+
+
+
+
