@@ -41,7 +41,7 @@ class zb_market:
         doc = self.process_request(url)
         tmp = doc['ticker']
         tmp['date'] = doc['date']
-        #print tmp
+
         df = pd.DataFrame([tmp])
 
         return df
@@ -68,6 +68,7 @@ class zb_market:
         url = self.url + "kline" + "?" + self.market
         print url
         doc = self.process_request(url)
-        print doc
-        return doc
+        headers = ['date', 'open', 'high', 'low', 'close','vol']
+        df = pd.DataFrame(doc['data'], columns=headers)
+        return df
 

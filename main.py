@@ -22,7 +22,7 @@ if __name__ == '__main__':
         access_secret = f.readline().strip()
     print "access_key:",access_key
     print "access_secret:", access_secret
-    test_capture(100)
+    #test_capture(100)
 
     #zb_api = zba.zb_api(access_key, access_secret,"btc")
     #zb_api.query_account()
@@ -32,8 +32,8 @@ if __name__ == '__main__':
     #sys.exit()
     zb_market = zbm.zb_market("")
     #zb_market.get_market()
-    tick = zb_market.get_tick()
-    print tick
+    #tick = zb_market.get_tick()
+    #print tick
     zb_market.get_depth(3)
-    zb_market.get_trade()
+    #zb_market.get_trade()
     zb_market.get_kline()
