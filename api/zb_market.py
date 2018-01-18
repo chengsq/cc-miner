@@ -41,7 +41,7 @@ class zb_market:
         doc = self.process_request(url)
         tmp = doc['ticker']
         tmp['date'] = doc['date']
-        #print tmp
+
         df = pd.DataFrame([tmp])
 
         return df
@@ -52,22 +52,23 @@ class zb_market:
         url = self.url + "depth?" + self.market + depth_str
         print url
         doc = self.process_request(url)
-        #tmp = doc['bids']
-        #df = pd.DataFrame([tmp])
-        print  doc
-        return doc
+        df = pd.DataFrame([doc])
+        return df
 
-    def get_trade(self):
-        url = self.url + "trades"+"?" + self.market
+    def get_trade(self,tid = 0):
+        url = self.url + "trades"+"?" + self.market+"&since="+str(tid)
         print url
         doc = self.process_request(url)
-        #print doc
-        return doc
+        headers = ['date', 'open', 'high', 'low', 'close', 'vol']
+        df = pd.DataFrame(doc)
+        #print df
+        return df
 
     def get_kline(self):
         url = self.url + "kline" + "?" + self.market
         print url
         doc = self.process_request(url)
-        print doc
-        return doc
+        headers = ['date', 'open', 'high', 'low', 'close','vol']
+        df = pd.DataFrame(doc['data'], columns=headers)
+        return df
 
