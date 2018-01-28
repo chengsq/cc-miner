@@ -2,7 +2,10 @@ from api import zb_market as zbm
 from api import zb_api as zba
 from storage import  file_storage as fs
 from storage import capture_data as cd
+from event.eventEngine import *
 import time
+from trader.gateway.zbGateway import *
+
 
 def test_capture(times):
     zb_market = zbm.zb_market("")
@@ -47,7 +50,19 @@ if __name__ == '__main__':
 
     #test_api(access_key,access_secret)
     #test_market()
-    test_capture()
+
+    zb_api = zba.zb_api(access_key, access_secret, "btc")
+    zb_market = zbm.zb_market("")
+    ee = EventEngine2()
+    zb_gateway = zbGateway(ee,zb_api,zb_market)
+    zb_gateway.startQuery()
+    ee.start()
+    while(1):
+        pass
+        time.sleep(0.7)
+
+    #test_capture()
+
 
 
 
